@@ -9,15 +9,15 @@ const initialState = {
     loading: false,
 }
 
-export const login = createAsyncThunk("/auth/login", async (loginCred, thunkApi) => {
+export const login = createAsyncThunk("auth/login", async (loginCred, thunkApi) => {
     try{
         const response = await axios.post("/auth/login", loginCred)
         localStorage.setItem("token", response.data.token)
-        localStorage.setItem("user", response.data.user)
-
+        localStorage.setItem("user", JSON.stringify(response.data.user));
         return response.data;
     }
     catch(error){
+        console.log(error)
         thunkApi.rejectWithValue(error.response?.data);
     }
 })
