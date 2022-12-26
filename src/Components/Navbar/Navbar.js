@@ -1,14 +1,19 @@
 import { AppBar, Toolbar, Typography, Grid, Tab, Tabs} from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 
 const Navbar = ({links}) => {
+    const isAuthenticated = useSelector((state) => state.security.isAuthenticated)
     const location = useLocation();
-    const [tab, setTab] = useState((location?.pathname === "/" ? links[0].path : location?.pathname));
+    const [tab, setTab] = useState(location?.pathname);
     //(links.filter((e) => e.path === "/signin").length > 0 ? "/signin" : "/signup")
 
+    useEffect(() => {
+        setTab(links[0].path);
+    }, [links, isAuthenticated])
     const navigate = useNavigate();
 
     const handleChange = (event, value) => {

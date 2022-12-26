@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Login from './Components/Auth/Login';
 import Navbar from "./Components/Navbar/Navbar"
 import Register from './Components/Auth/Register';
@@ -18,23 +18,18 @@ function App() {
       <BrowserRouter>
         {
         isAuthenticated ? 
-        <>
           <Navbar links={authLinks}></Navbar>
-          <Routes>
-            <Route path='/home' element={<ProtectedRoute><Home/></ProtectedRoute>}></Route>
-          </Routes>
-        </> 
-
-        :
-        <>
+          :
           <Navbar links={unauthLinks}></Navbar>
-          <Routes>
-            <Route path = "/" element={<Login/>}></Route>
-            <Route path='/signin' element={<Login/>}></Route>
-            <Route path='/signup' element={<Register/>}></Route>
-          </Routes>
-        </>
         }
+          <Routes>          
+            <Route path = "/" element={<ProtectedRoute><Home/></ProtectedRoute>}></Route> 
+            <Route path='/signin' element={<Login/>}></Route>
+            <Route path='/signup' element={<Register/>}></Route>      
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        
+        
       </BrowserRouter>
     </div>
   );

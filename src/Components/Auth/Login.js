@@ -1,11 +1,12 @@
 import { Button, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useForm, Controller } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup"; 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { login } from "../../Store/securitySlice";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const schema = yup.object().shape({
     username: yup.string().required(),
@@ -14,8 +15,18 @@ const schema = yup.object().shape({
   
 const Login = () => {
 
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const isAuthenticated = useSelector((state) => state.security.isAuthenticated)
+
+    useEffect(() => {
+        if(isAuthenticated){
+            navigate("/", {replace: true})
+        }
+    }, [isAuthenticated, navigate])
+
     const { control, handleSubmit, formState: { errors }, reset } = useForm({
         defaultValues: {
           username: "",
@@ -27,7 +38,8 @@ const Login = () => {
         const { username, password } = formProps;
         if (username && password) {
             dispatch(login(formProps));
-        }   
+        }
+        navigate("/home", {replace:true})
     };
 
     return <Box display="flex" flexDirection="column" maxWidth={400} alignItems="center" justifyContent={"center"} margin="auto" marginTop={5} padding={3}>
