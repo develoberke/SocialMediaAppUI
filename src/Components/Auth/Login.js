@@ -7,6 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { login } from "../../Store/securitySlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { getAllPosts } from "../../Store/postSlice";
 
 const schema = yup.object().shape({
     username: yup.string().required(),
@@ -37,7 +38,7 @@ const Login = () => {
     const onSubmit = async (formProps) => {
         const { username, password } = formProps;
         if (username && password) {
-            dispatch(login(formProps));
+            dispatch(login(formProps)).then(dispatch(getAllPosts()));
         }
         navigate("/home", {replace:true})
     };
@@ -52,6 +53,7 @@ const Login = () => {
                     <TextField
                     {...field}
                     margin="normal"
+                    type={"text"}
                     label="Username"
                     placeholder="Username"
                     variant="outlined"
@@ -69,6 +71,7 @@ const Login = () => {
                     <TextField
                     {...field}
                     margin="normal"
+                    type={"password"}
                     label="Password"
                     placeholder="Password"
                     variant="outlined"
