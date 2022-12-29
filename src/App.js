@@ -7,10 +7,21 @@ import ProtectedRoute from './Libs/ProtectedRoute';
 import { useSelector } from 'react-redux';
 import Home from './Screens/Home';
 import Profile from './Screens/ProfileScreen';
+import axios from "./Libs/api"
+import { useEffect } from 'react';
 
 const unauthLinks = [{path : "/signin", name: "Sign in"}, {path : "/signup", name: "Sign up"}]
 
 function App() {
+  return (
+    <div className="App">
+      <AppContents/>
+    </div>
+  );
+}
+
+
+const AppContents = () => {
   const isAuthenticated = useSelector(
     (state) => state.security.isAuthenticated
   );
@@ -18,9 +29,9 @@ function App() {
   const userId = useSelector((state) => state.security.user.id)
     //burada sıkıntı oluyor mu kontrol et
   const authLinks = [{path : "/", name: "Home"}, {path: `/profile/${userId}`, name: "Profile"}]
+
   return (
-    <div className="App">
-      <BrowserRouter>
+    <BrowserRouter>
         {
         isAuthenticated ? 
           <Navbar links={authLinks}></Navbar>
@@ -37,8 +48,6 @@ function App() {
         
         
       </BrowserRouter>
-    </div>
-  );
+  )
 }
-
 export default App;

@@ -38,7 +38,7 @@ const Login = () => {
     const onSubmit = async (formProps) => {
         const { username, password } = formProps;
         if (username && password) {
-            dispatch(login(formProps)).then(dispatch(getAllPosts()));
+            dispatch(login(formProps));
         }
         navigate("/home", {replace:true})
     };

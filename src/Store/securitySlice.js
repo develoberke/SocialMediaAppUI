@@ -26,7 +26,11 @@ export const login = createAsyncThunk("auth/login", async (loginCred, thunkApi) 
 export const securitySlice = createSlice({
     name:"security",
     initialState,
-    reducers:{},
+    reducers:{
+        logout(state) {
+            state.isAuthenticated = false;
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(login.pending, (state, action) => {
             state.loading = true;
@@ -47,5 +51,5 @@ export const securitySlice = createSlice({
     }
 })
 
-
+export const {logout} = securitySlice.actions;
 export default securitySlice.reducer;
