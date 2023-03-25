@@ -1,3 +1,8 @@
+# Social Media App UI
+This project written with React.js
+This is a UI for Social Media App and compatible with an api => https://github.com/BBerkeYildirim/SocialMediaAppApi
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
